@@ -19,8 +19,8 @@ recipeRouter.get("/recipes", getAllRecipes);
 recipeRouter.post("/recipe",  isAuthenticated, 
   isAuthorized (['chef', 'admin']),  recipePictures.single("image"),  createRecipe);
 recipeRouter.get("/recipe/:id", isAuthenticated,  getMyRecipe);
-recipeRouter.patch("/recipe/:id", isAuthenticated,  updateRecipe);
-recipeRouter.delete("/recipe/:id", isAuthenticated,  deleteRecipe);
+recipeRouter.patch("/recipe/:id", isAuthenticated, isAuthorized,  updateRecipe);
+recipeRouter.delete("/recipe/:id", isAuthenticated, isAuthorized,  deleteRecipe);
 
 
 export default recipeRouter;
