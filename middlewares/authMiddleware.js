@@ -15,7 +15,7 @@ export const isAuthorized =(roles) => {
   return async (req, res, next) => {
       
     try{
-      const userId = req.auth?.id;
+      const userId = req.user?.userId;
 
       if (!userId) {
         return res.status(401).json({ error: 'Unauthorized: No user ID in token' });
