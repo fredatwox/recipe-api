@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import authRouter from "./routes/authRoutes.js";
 import userRouter from "./routes/userRoutes.js";
 import recipeRouter from "./routes/recipeRoutes.js";
+// import cors from "cors";
 
 
 
@@ -21,12 +22,25 @@ const app = express();
 //middleware
 app.use(express.json());
 
-
+// app.use(cors({
+//   origin: 'https://your-frontend.com',
+//   credentials: true,
+//   allowedHeaders: ['Authorization', 'Content-Type'],
+// }));
 
 //Routes to use
 app.use("/api/v1", authRouter );
 app.use("/api/v1", userRouter );
 app.use("/api/v1", recipeRouter);
+
+
+// Handle JWT errors from express-jwt
+app.use((err, req, res, next) => {
+  if (err.name === "UnauthorizedError") {
+    return res.status(401).json({ error: "Invalid or missing token" });
+  }
+  next(err);
+});
 
 
 //listening to incoming request

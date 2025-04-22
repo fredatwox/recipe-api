@@ -116,8 +116,13 @@ export const updateRecipe = async (req, res) => {
 
 export const deleteRecipe = async (req, res) => {
   try {
+
+     // Log the JWT payload (set by express-jwt)
+     console.log(" Authenticated User:", req.user);
+
+
     const recipeId = req.params.id;
-    const userId = req.user?.userId;  
+    const userId = req.user?.userId || req.user?.id;
     const userRole = req.user?.role;
 
     if (!userId || !userRole) {
@@ -139,6 +144,7 @@ export const deleteRecipe = async (req, res) => {
 
     res.status(200).json({ message: "Recipe deleted successfully" });
   } catch (err) {
+    console.error(" Error in deleteRecipe:", err);
     res.status(500).json({ error: err.message });
   }
 };
