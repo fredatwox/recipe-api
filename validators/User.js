@@ -4,11 +4,11 @@ import Joi from "joi";
 
 export const registerUserValidator = Joi.object({
   fullName: Joi.string().required().messages({
-    'string.empty': 'Fulll name is required',
+    'string.empty': 'Full name is required',
   }),
   email: Joi.string().email().required().messages({
     'string.email': 'Please enter a valid email address',
-    'string.empty': 'Emaill is required',
+    'string.empty': 'Email is required',
   }),
   password: Joi.string().min(6).required().messages({
     'string.min': 'Password must be at least 6 characters long',
