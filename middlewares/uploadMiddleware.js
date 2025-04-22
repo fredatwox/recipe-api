@@ -21,3 +21,16 @@ export const recipePictures = multer({
   })
 
 });
+
+
+export const profilePictures = multer({
+  storage: new CloudinaryStorage({
+    cloudinary,
+    params: {
+      folder: "/recipe-api/profiles",
+      allowed_formats: ["jpg", "jpeg", "png", "webp"],
+      transformation: [{ width: 300, height: 300, crop: "thumb", gravity: "face" }]
+    }
+  }),
+  limits: { fileSize: 3 * 1024 * 1024 } // 3 MB limit
+});

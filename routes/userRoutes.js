@@ -19,8 +19,9 @@ const userRouter = Router();
 userRouter.get("/profile", isAuthenticated, getMyProfile);
 userRouter.patch("/profile", isAuthenticated, updateMyProfile);
 userRouter.delete('/profile', isAuthenticated, deleteMyProfile);
-userRouter.post("/bookmark",   toggleBookmark);
-userRouter.get("/bookmarks",   getBookmarks);
+userRouter.post("/bookmark",  isAuthenticated, toggleBookmark);
+userRouter.get("/bookmarks", isAuthenticated,  getBookmarks);
+
 
 
 

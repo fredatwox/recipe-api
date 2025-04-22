@@ -7,7 +7,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon --env-file=.env . index.js",
     "start": "node ."
-  
   },
   "repository": {
     "type": "git",
@@ -34,7 +33,8 @@
     "multer-storage-cloudinary": "^4.0.0",
     "nodemailer": "^6.10.1",
     "nodemon": "^3.1.9",
-    "normalize-mongoose": "^1.0.0"
+    "normalize-mongoose": "^1.0.0",
+    "redis": "^4.7.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.9"

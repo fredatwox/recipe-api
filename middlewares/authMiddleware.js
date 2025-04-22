@@ -35,8 +35,9 @@ export const isAuthorized =(roles) => {
         req.user = user;
 
     
-          next();
-      } catch {
+       return next();
+      } catch (err) {
+        console.error(err);
           res.status(403).json('You are not authorized');
       }
     }

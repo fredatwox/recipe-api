@@ -18,7 +18,8 @@ export const createRecipe = async (req, res) => {
       image,
       chef: req.user.id
     });
-    res.status(201).json(newRecipe);
+    await newRecipe.save();
+    res.status(201).json({message: 'Recipe created scuccesfully'},newRecipe);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -82,7 +83,7 @@ export const updateRecipe = async (req, res) => {
     console.log('Recipe Chef:', recipe.chef);
     console.log('Logged In User ID:', userId);
 
-    const isOwnerChef = recipe.chef.toString() === userId;
+    const isOwnerChef = recipe.chef._id.toString() === userId;
 
     if (!isOwnerChef) {
       return res.status(403).json({ error: 'You are not authorized to update this recipe' });
@@ -116,7 +117,7 @@ export const updateRecipe = async (req, res) => {
 export const deleteRecipe = async (req, res) => {
   try {
     const recipeId = req.params.id;
-    const userId = req.user?.id;
+    const userId = req.user?.userId;  
     const userRole = req.user?.role;
 
     if (!userId || !userRole) {
@@ -128,9 +129,9 @@ export const deleteRecipe = async (req, res) => {
       return res.status(404).json({ message: "Recipe not found" });
     }
 
-    const isOwnerChef = recipe.chef.toString() === userId;
+    const isOwnerChef = recipe.chef.toString() === userId.toString();
 
-    if (!isOwnerChef) {
+    if (!isOwnerChef && userRole !== 'admin') {
       return res.status(403).json({ error: 'You are not authorized to delete this recipe' });
     }
 

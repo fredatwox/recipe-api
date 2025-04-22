@@ -26,8 +26,7 @@ export const updateMyProfile = async (req, res) => {
 
     const user = await userModel.findByIdAndUpdate(req.user.id, updates, { new: true }).select("-password");
 
-
-    res.json(user);
+    res.json({message: 'Profile updated successfully', user});
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -53,6 +52,12 @@ export const toggleBookmark = async (req, res) => {
   try {
     const user = await userModel.findById(req.user.id);
     const { recipeId } = req.body;
+
+    
+    if (!Types.ObjectId.isValid(recipeId)) {
+      return res.status(400).json({ error: 'Invalid recipe ID' });
+    }
+    
     const index = user.bookmarkedRecipes.indexOf(recipeId);
     if (index > -1) {
       user.bookmarkedRecipes.splice(index, 1);

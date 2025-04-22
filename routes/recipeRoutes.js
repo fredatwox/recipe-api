@@ -16,11 +16,11 @@ import { recipePictures } from "../middlewares/uploadMiddleware.js";
 const recipeRouter = Router();
 
 recipeRouter.get("/recipes", getAllRecipes);
-recipeRouter.post("/recipe",  isAuthenticated, 
-  isAuthorized (['chef', 'admin']),  recipePictures.single("image"),  createRecipe);
-recipeRouter.get("/recipe/:id", isAuthenticated,  getMyRecipe);
-recipeRouter.patch("/recipe/:id", isAuthenticated, isAuthorized,  updateRecipe);
-recipeRouter.delete("/recipe/:id", isAuthenticated, isAuthorized,  deleteRecipe);
+recipeRouter.post("/recipe", isAuthenticated,
+  isAuthorized(['chef', 'admin']), recipePictures.single("image"), createRecipe);
+recipeRouter.get("/recipe/:id", isAuthenticated, getMyRecipe);
+recipeRouter.patch("/recipe/:id", isAuthenticated, isAuthorized(['chef', 'admin']), updateRecipe);
+recipeRouter.delete("/recipe/:id", isAuthenticated, isAuthorized(['chef', 'admin']), deleteRecipe);
 
 
 export default recipeRouter;
