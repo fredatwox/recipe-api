@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import authRouter from "./routes/authRoutes.js";
 import userRouter from "./routes/userRoutes.js";
 import recipeRouter from "./routes/recipeRoutes.js";
-// import cors from "cors";
+import cors from "cors";
 
 
 
@@ -22,11 +22,10 @@ const app = express();
 //middleware
 app.use(express.json());
 
-// app.use(cors({
-//   origin: 'https://your-frontend.com',
-//   credentials: true,
-//   allowedHeaders: ['Authorization', 'Content-Type'],
-// }));
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true,
+}));
 
 //Routes to use
 app.use("/api/v1", authRouter );
