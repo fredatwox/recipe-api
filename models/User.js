@@ -12,7 +12,7 @@ const userSchema = new Schema({
   country: {type: String, required: true},
   role: { type: String, enum: ["chef", "food_lover"], required: true},
 
-  bookmarkedRecipes: [{ type: Types.ObjectId, ref: "Recipe" }]
+  
 }, {
  timestamps: true
 
