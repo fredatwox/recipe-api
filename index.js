@@ -27,6 +27,7 @@ app.use(cors({
   credentials: true,
 }));
 
+
 //Routes to use
 app.use("/api/v1", authRouter );
 app.use("/api/v1", userRouter );

@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { userModel } from "../models/User.js";
-import {registerUserValidator, loginUserValidator } from "../validators/user.js";
+import { registerUserValidator, loginUserValidator } from "../validators/User.js";
 
 
 
@@ -30,16 +30,16 @@ export const register = async (req, res, ) => {
       password: hashedPassword
   });
 
-  const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+  const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, { expiresIn: '8h' });
   const verificationLink = `http://yourfrontend.com/verify-email?token=${token}`;
-//    
-// // Send registration email to user
-//  await mailTransporter.sendMail({
-//      from:'Nnoboa35@gmail.com',
-//      to: value.email,
-//      subject: 'Nodemailer worked successfuly',
-//      html: registerUserMailTemplate.replace('{{username}}', value.username),
-//  })
+   
+// Send registration email to user
+ await mailTransporter.sendMail({
+     from:'ghanaeats2025@gmail.com',
+     to: value.email,
+     subject: 'Nodemailer worked successfuly',
+     html: registerUserMailTemplate.replace('{{username}}', value.username),
+ })
  //(optionally) Generate access token for user 
  //retun response
  res.status(201).json({
@@ -58,6 +58,7 @@ export const login = async (req, res) => {
   
     // 2. Find user by name or email
     const user = await userModel.findOne({ email: req.body.email });
+
   
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
@@ -83,11 +84,18 @@ export const login = async (req, res) => {
       maxAge: 86400000
     });
   
-    // 5. Send response
-    res.status(200).json({
-      message: 'User logged in successfully!',
-      accessToken
-    });
+    // 5. Send response with user details for visibility (optional)
+  res.status(200).json({
+    message: 'User logged in successfully!',
+    user: {
+      _id: user._id,
+      email: user.email,
+      role: user.role,
+      fullName: user.fullName || "", // if available
+    },
+    accessToken,
+  });
+   
   };
 
 
@@ -130,7 +138,7 @@ export const login = async (req, res) => {
   };
 
 
-  
+
   export const resetPassword = async (req, res) => {
     try {
       const { token, newPassword } = req.body;
