@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { userModel } from "../models/User.js";
 import { registerUserValidator, loginUserValidator } from "../validators/User.js";
+import { sendEmail } from "../utils/sendEmail.js";
 
 
 
@@ -33,13 +34,19 @@ export const register = async (req, res, ) => {
   const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, { expiresIn: '8h' });
   const verificationLink = `http://yourfrontend.com/verify-email?token=${token}`;
    
+
+  // Before sending email, verify email is present
+if (!newUser.email) {
+  return res.status(400).json({ message: 'User email not available to send welcome email.' });
+}
+
 // Send registration email to user
- await mailTransporter.sendMail({
-     from:'ghanaeats2025@gmail.com',
-     to: value.email,
-     subject: 'Nodemailer worked successfuly',
-     html: registerUserMailTemplate.replace('{{username}}', value.username),
- })
+ await sendEmail(
+  newUser.email,
+  "your email",
+ );
+
+ 
  //(optionally) Generate access token for user 
  //retun response
  res.status(201).json({

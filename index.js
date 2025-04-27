@@ -8,24 +8,21 @@ import cors from "cors";
 
 
 
-mongoose.connect(process.env.MONGO_URI, {
-  }).then(() => console.log("MongoDB connected"))
-    .catch(err => console.log("MongoDB error:", err));
- 
-    
-
 //create an express app
 const app = express();
+
+
+
+app.use(cors({
+  origin: ['https://recipe-website-6hfz.vercel.app', 'http://localhost:5174'],
+  credentials: true,
+}));
 
 
 
 //middleware
 app.use(express.json());
 
-app.use(cors({
-  origin: ['https://recipe-website-6hfz.vercel.app', 'http://localhost:5174'],
-  credentials: true,
-}));
 
 
 //Routes to use
@@ -41,6 +38,12 @@ app.use((err, req, res, next) => {
   }
   next(err);
 });
+
+
+mongoose.connect(process.env.MONGO_URI, {
+}).then(() => console.log("MongoDB connected"))
+  .catch(err => console.log("MongoDB error:", err));
+
 
 
 //listening to incoming request

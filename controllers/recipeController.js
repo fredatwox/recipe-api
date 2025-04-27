@@ -5,16 +5,14 @@ import { recipeModel } from "../models/Recipe.js";
 
 export const createRecipe = async (req, res) => {
   try {
-     const { title, description, ingredients, steps, category, totalTime, difficulty, } = req.body;
+     const { title, description, ingredients, category, cookingInstructions, } = req.body;
     const image = req.file ? req.file.filename : null;
     const newRecipe = await recipeModel.create({
       title,
       description,
       ingredients,
-      steps,
       category,
-      totalTime,
-      difficulty,
+      cookingInstructions,
       image,
       chef: req.user.id
     });

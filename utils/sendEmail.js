@@ -12,13 +12,12 @@ import nodemailer from "nodemailer";
     },
   });
 
-  export const sendEmail = async(to, subject) =>{
+  export const sendEmail = async(to, subject, html) =>{
     const send = await transporter.sendMail({
     from: process.env.EMAIL_USER,
     to,
     subject,
-    html: `<h1> Welcome to Ghana Eats Platform</h1>.
-    <p> We are pleased to have you onboard on our site<p>`
+    html,
   });
 
 
