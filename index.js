@@ -23,7 +23,7 @@ const app = express();
 app.use(express.json());
 
 app.use(cors({
-  origin: ['https://recipe-website-6hfz.vercel.app'],
+  origin: ['https://recipe-website-6hfz.vercel.app', 'http://localhost:5174'],
   credentials: true,
 }));
 
