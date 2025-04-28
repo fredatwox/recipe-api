@@ -6,16 +6,25 @@ import { recipeModel } from "../models/Recipe.js";
 export const createRecipe = async (req, res) => {
   try {
      const { title, description, ingredients, category, cookingInstructions, } = req.body;
-    const image = req.file ? req.file.filename : null;
+    const imageUrl = req.file ? req.file.path : null;
+
+          // Make sure file uploaded
+    if (!req.file) {
+      return res.status(400).json({ message: "Image file is required" });
+    }
+
     const newRecipe = await recipeModel.create({
       title,
       description,
       ingredients,
       category,
       cookingInstructions,
-      image,
+      imageUrl,
       chef: req.user.id
     });
+
+ 
+
     await newRecipe.save();
     res.status(201).json({message: 'Recipe created scuccesfully'},newRecipe);
   } catch (err) {

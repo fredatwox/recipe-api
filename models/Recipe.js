@@ -7,7 +7,7 @@ import normalize  from "normalize-mongoose";
 const recipeSchema = new Schema({
   title: {type: String, required: true, unique: true },
   category: {type: String,  enum: ["Traditional", "Soups", "Street Food", "Desserts"],  required: true},
-  image: {type: String, required: true},
+  imageUrl: {type: String, },
   ingredients: {type: String, required: true},
   description: {type: String, required: true },
   cookingInstructions: {type: String, required: true},
